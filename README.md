@@ -17,9 +17,9 @@
     <li><strong>Vue env:</strong> Add a vue .env to the path: "/frontend/.env" using the example in "/frontend/.env.example"</li>
     <li><strong>Start Docker containers:</strong> Run <code>docker-compose up -d --build</code> to start the Docker containers.</li>
     <li><strong>Enter the Docker container:</strong> Use the command <code>docker-compose exec -it booking_php sh </code> to enter the PHP Docker container.</li>
-    <li><strong>Install PHP dependencies:</strong> Run <code>composer install</code> to install the necessary PHP dependencies.</li>
-    <li><strong>Run migrations:</strong> Use <code>php artisan migrate:fresh --seed</code> to run the migrations and create the necessary tables in the database.</li>
-    <li><strong>Admin Interface:</strong> There is no link to admin for security but it is  located at <code>/admin</code> path . Please note that only users who are admins can access this page.</li>
+    <li><strong>Install PHP dependencies:</strong>Inside the container, Run <code>composer install</code> to install the necessary PHP dependencies.</li>
+    <li><strong>Run migrations:</strong>Inside the container, Use <code>php artisan migrate:fresh --seed</code> to run the migrations and create the necessary tables in the database.</li>
+    <li><strong>Admin Interface:</strong> There is no link to admin for security but it is  located at <code>/admin</code> path. This url should be entered into the browser manually. Please note that only users who are admins can access this page.</li>
     <li><strong>Creating an Admin User:</strong> A user can be made admin by updating the <code>is_admin</code> column in the <code>users</code> table to <code>1</code>.</li>
 </ol>
 
