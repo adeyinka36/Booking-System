@@ -12,6 +12,7 @@
     <li><strong>Create the SQLite database file:</strong> Create a SQLite database file in your preferred location and update the <code>DB_DATABASE</code> variable in the <code>.env</code> file with its path.</li>
     <li><strong>Set up Email:</strong> Update the email-related environment variables in the <code>.env</code> file as necessary.</li>
     <li><strong>Queue Worker:</strong> The emails are dispatched in queues. Therefore, a queue worker will need to be running in order for the emails to be sent.</li>
+    <li><strong>Vue env:</strong>Add vue .env using the example in "/frontend/.env.example"</li>
     <li><strong>Start Docker containers:</strong> Run <code>docker-compose up -d</code> to start the Docker containers.</li>
     <li><strong>Enter the Docker container:</strong> Use the command <code>docker-compose exec booking_php sh</code> to enter the PHP Docker container.</li>
     <li><strong>Install PHP dependencies:</strong> Run <code>composer install</code> to install the necessary PHP dependencies.</li>
