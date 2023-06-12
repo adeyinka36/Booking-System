@@ -1,14 +1,14 @@
 version: "3"
 
 networks:
-  payments:
+  bookings:
 
 services:
   nginx:
     container_name: "booking_nginx"
     image: nginx:stable-alpine
     networks:
-      - payments
+      - bookings
     ports:
       - "8080:80"
     volumes:
@@ -20,7 +20,7 @@ services:
   php:
     container_name: "booking_php"
     networks:
-      - payments
+      - bookings
     build:
       context: .
       dockerfile: dockerfiles/php.dockerfile
@@ -32,7 +32,7 @@ services:
   frontend:
     container_name: "booking_frontend"
     networks:
-      - payments
+      - bookings
     build:
       context: .
       dockerfile: dockerfiles/vue.dockerfile
