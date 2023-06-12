@@ -1,0 +1,268 @@
+openapi: 3.0.0
+info:
+  title: Hayden's Garage Booking API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local server
+#  - aws url
+
+paths:
+  /api/v1/bookings:
+    get:
+      summary: Returns a list of bookings
+      parameters:
+        - in: query
+          name: date
+          schema:
+            type: string
+            format: date
+          description: The date to filter bookings
+      responses:
+        '200':
+          description: A list of bookings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Booking'
+    post:
+      summary: Creates a new booking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+      responses:
+        '201':
+          description: The created booking
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+
+  /api/v1/bookings/{id}:
+    put:
+      summary: Updates an existing booking
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: The booking ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+      responses:
+        '200':
+          description: The updated booking
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+    delete:
+      summary: Deletes a booking
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: The booking ID
+      responses:
+        '204':
+          description: Successfully deleted
+
+  /api/v1/users:
+    post:
+      summary: Creates a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+                phone_number:
+                  type: string
+                is_admin:
+                    type: integer
+      responses:
+        '200':
+          description: User created successfully
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /api/v1/users/{userId}:
+    get:
+      summary: Retrieves a user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Bad request
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+  /api/v1/auth/login:
+      post:
+        summary: Logs in a user
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    format: email
+                  password:
+                    type: string
+                    format: password
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          '400':
+            description: Bad request
+          '404':
+            description: User not found
+          '500':
+            description: Internal server error
+
+      put:
+        summary: Updates a user
+        parameters:
+          - name: userId
+            in: path
+            required: true
+            schema:
+              type: integer
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  email:
+                    type: string
+                    format: email
+                  phone_number:
+                    type: string
+                  is_admin:
+                    type: integer
+        responses:
+          '200':
+            description: User updated successfully
+          '400':
+            description: Bad request
+          '404':
+            description: User not found
+          '500':
+            description: Internal server error
+
+      delete:
+        summary: Deletes a user
+        parameters:
+          - name: userId
+            in: path
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: User deleted successfully
+          '400':
+            description: Bad request
+          '404':
+            description: User not found
+          '500':
+            description: Internal server error
+
+components:
+  schemas:
+    Booking:
+      type: object
+      properties:
+        id:
+          type: integer
+        customer_id:
+          type: integer
+        vehicle_make_and_model:
+          type: string
+        booking_time:
+          type: string
+          format: time
+        booking_date:
+          type: string
+          format: date
+      required:
+        - customer_id
+        - vehicle_make_and_model
+        - booking_time
+        - booking_date
+    User:
+      type: object
+      properties:
+          id:
+            type: integer
+            readOnly: true
+            example: 10
+          name:
+            type: string
+            example: "Doe"
+          email:
+            type: string
+            format: email
+            example: "johndoe@example.com"
+          is_admin:
+            type: integer
+            example: 1
+          phone_number:
+            type: string
+            example: "+1234567890"
+      required:
+        - is_admin
+        - name
+        - phone_number
+        - email
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
