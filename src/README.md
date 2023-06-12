@@ -1,66 +1,29 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1>Hayden's Garage Booking System</h1>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<p>Welcome to Hayden's Garage Booking System! This document will guide you through the steps needed to get the project up and running.</p>
 
-## About Laravel
+<h2>Getting Started</h2>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p>Follow these steps to set up the project:</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<ol>
+    <li><strong>Clone the repository:</strong> Run <code>git clone [repo-url]</code> to clone the repository to your local machine.</li>
+    <li><strong>Set up the environment:</strong> Copy <code>.env.example</code> to <code>.env</code> and update the environment variables as necessary.</li>
+    <li><strong>Create the SQLite database file:</strong> Create a SQLite database file in your preferred location and update the <code>DB_DATABASE</code> variable in the <code>.env</code> file with its path.</li>
+    <li><strong>Set up Email:</strong> Update the email-related environment variables in the <code>.env</code> file as necessary.</li>
+    <li><strong>Queue Worker:</strong> The emails are dispatched in queues. Therefore, a queue worker will need to be running in order for the emails to be sent.</li>
+    <li><strong>Start Docker containers:</strong> Run <code>docker-compose up -d</code> to start the Docker containers.</li>
+    <li><strong>Enter the Docker container:</strong> Use the command <code>docker-compose exec booking_php sh</code> to enter the PHP Docker container.</li>
+    <li><strong>Install PHP dependencies:</strong> Run <code>composer install</code> to install the necessary PHP dependencies.</li>
+    <li><strong>Run migrations:</strong> Use <code>php artisan migrate</code> to run the migrations and create the necessary tables in the database.</li>
+    <li><strong>Admin Interface:</strong> The admin interface is located at <code>/admin</code>. Please note that only users who are admins can access this page.</li>
+    <li><strong>Creating an Admin User:</strong> A user can be made admin by updating the <code>is_admin</code> column in the <code>users</code> table to <code>1</code>.</li>
+</ol>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<h2>Contact</h2>
 
-## Learning Laravel
+<p>Please get in touch with the creator of this project at <a href="mailto:adeyinka.giwa36@gmail.com">adeyinka.giwa36@gmail.com</a> for any questions or queries.</p>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<h2>Enjoy!</h2>
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<p>Remember to have fun with the system, and don't hesitate to reach out if you have any issues.</p>
