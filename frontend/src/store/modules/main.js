@@ -84,6 +84,8 @@ export const mutations = {
 
 
 export const actions = {
+
+    //get all booked slots
     getBookedSlots({commit}){
         commit('setLoading', true);
         axios.get(`${process.env.VUE_APP_API_URL}/bookings`).then((response) => {
@@ -103,6 +105,8 @@ export const actions = {
         axios.get(`${process.env.VUE_APP_API_URL}/auth/logout`, headers()).catch(() => {});
         localStorage.removeItem('booking_token');
     },
+
+    //register or log in a user
     registerLogInUser({commit, state}, details) {
         commit('setLoading', true);
         const location = state.formPortalLocation === 'reg' ? `${process.env.VUE_APP_API_URL}/auth/register` : `${process.env.VUE_APP_API_URL}/auth/login`;
@@ -121,6 +125,8 @@ export const actions = {
                 commit('setLoading', false);
             });
     },
+
+    //get the logged in user details
     loggedInUser({commit}) {
         commit('setLoading', true);
         axios.get(`${process.env.VUE_APP_API_URL}/auth/user`,headers()).then((response) => {
@@ -137,6 +143,8 @@ export const actions = {
             commit('setLoading', false);
         });
     },
+
+    //booking a slot
     storeSlot({ commit, state}) {
         const data = {
             user_id: state.user.id,
@@ -155,6 +163,8 @@ export const actions = {
             commit('setLoading', false);
         });
     },
+
+    //fetching all the booked slots
     fetchBookedSlots({commit}) {
         commit('setLoading', true);
         axios.get(`${process.env.VUE_APP_API_URL}/bookings`, headers()).then((res) => {

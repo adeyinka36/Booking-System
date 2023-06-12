@@ -60,11 +60,13 @@ export default {
     }
   },
   created() {
+    //fetching user and bookings information
     this.fetchBookedSlots();
     this.fetchCurrentDayBlockedTimes();
     this.$store.dispatch('loggedInUser')
   },
   mounted() {
+    //  Welcome notification
     let user = JSON.parse(localStorage.getItem('user'));
     setTimeout(() => {
       this.$store.commit('setNotification', `Welcome ${user.name}!`);

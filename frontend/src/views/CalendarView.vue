@@ -53,6 +53,8 @@ export default {
       this.fetchCurrentDayBlockedTimes(this.currentDay);
       this.$store.dispatch('fetchBookedSlots', this.currentDay)
     },
+
+    //generating the slots
     generateSlots() {
       const slots = [];
       for (let i = 9; i <= 17; i += 0.5) {
@@ -65,6 +67,7 @@ export default {
     isBooked(slot) {
       return this.takenSlotsToday.includes(slot) || this.currentDayBlockedTimes.includes(slot);
     },
+
     bookSlot(slot) {
       if(this.isWeekend){
         this.$store.commit('setNotification', notificationMessages["weekend-prompt"]);
@@ -74,6 +77,8 @@ export default {
         this.$store.commit('setNotification', notificationMessages["login-prompt"]);
         return;
       }
+
+      //this function is used to check if the slots are booked
       if (!this.isBooked(slot)) {
         let day =moment(this.currentDay).format("dddd");
         //get current day weekday
@@ -84,6 +89,8 @@ export default {
 
       }
     },
+
+    //changing the day and skipping weekends
     prevDay() {
       const weekDay = moment(this.currentDay).format("dddd");
       const isMonday = weekDay === "Monday";

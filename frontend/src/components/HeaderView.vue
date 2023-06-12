@@ -56,6 +56,12 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    span{
+      &:hover {
+        cursor: pointer;
+        color: darken(bisque, 10%);
+      }
+    }
   }
 }
 

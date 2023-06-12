@@ -19,7 +19,7 @@
         </li>
       </ul>
     </div>
-     <span @click="clearAllSlots" class="block-all" :title="`This cancel all bookings and block all slots for ${currentDate}`">Block all slots</span>
+     <span @click="clearAllSlots" class="block-all" :title="`This will cancel all bookings and block all slots for ${currentDate}`">Block all slots</span>
   </div>
 </template>
 
@@ -88,8 +88,10 @@
   }
 }
 .block-all{
-  background-color: black;
-  padding: .25rem;
+  background-color: bisque;
+  padding: .5rem;
+  color: black;
+  border-radius: 5px;
   font-weight: bold;
   font-size: 1.5rem;
   &:hover{
