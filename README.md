@@ -9,12 +9,13 @@
 <p>Follow these steps to set up the project:</p>
 
 <ol>
+    <li>The laravel file resides in the <code>/src</code> folder and the vue is in <code>/frontend</code>.</li>
     <li><strong>Clone the repository:</strong> Run <code>git clone</code> to clone the repository to your local machine.</li>
-    <li><strong>Set up the environment:</strong> Copy <code>.env.example</code> to <code>.env</code> and update the environment variables as necessary.</li>
-    <li><strong>Create the SQLite database file:</strong> Create a SQLite database file called "database.sqlite" in the path /database/database.sqlite and update the db values in the env using the .env.example details</li>
-    <li><strong>Set up Email:</strong> Update the email-related environment variables in the <code>.env</code> file as necessary.</li>
+    <li><strong>Set up the environment:</strong> Copy <code>src/.env.example</code> to <code>src/.env</code> and update the environment variables as necessary.</li>
+    <li><strong>Create the SQLite database file:</strong> Create a SQLite database file called "database.sqlite" in the path /database/database.sqlite and update the db values in the env using the src/.env.example details</li>
+    <li><strong>Set up Email:</strong> Update the email-related environment variables in the <code>src/.env</code> file as necessary.</li>
     <li><strong>Queue Worker:</strong> The emails are dispatched in queues. Therefore, a queue worker will need to be running in order for the emails to be sent as jobs.</li>
-    <li><strong>Vue env:</strong> Add a vue .env to the path: "/frontend/.env" using the example in "/frontend/.env.example"</li>
+    <li><strong>Vue env:</strong> Add a vue src/.env to the path: "/frontend/.env" using the example in "/frontend/.env.example"</li>
     <li><strong>Start Docker containers:</strong> Run <code>docker-compose up -d --build</code> to start the Docker containers.</li>
     <li><strong>Enter the Docker container:</strong> Use the command <code>docker-compose exec -it booking_php sh </code> to enter the PHP Docker container.</li>
     <li><strong>Install PHP dependencies:</strong> Run <code>composer install</code> to install the necessary PHP dependencies.</li>
