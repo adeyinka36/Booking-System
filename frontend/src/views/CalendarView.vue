@@ -2,7 +2,7 @@
   <div class="container">
     <div class="calendar">
       <div class="calendar-header">
-        <span @click="prevDay">Prev</span>
+        <span @click="prevDay" :class="[ isBeforeToday ? 'disable': '']">Prev</span>
         <h2>{{ currentDay }}</h2>
         <span @click="nextDay">Next</span>
       </div>
@@ -45,6 +45,9 @@ export default {
     },
     takenSlotsToday() {
       return this.bookedSlots.filter(slot => slot.booking_date === this.currentDay).map(slot => slot.booking_time);
+    },
+    isBeforeToday(){
+      return this.currentDay === moment(new Date()).format('YYYY-MM-DD');
     }
   },
   methods: {
@@ -165,5 +168,10 @@ export default {
 .is-weekend {
   background-color: red;
   color: #6c757d;
+}
+.disable {
+  color: darkcyan;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 </style>

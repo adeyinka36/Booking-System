@@ -1,4 +1,4 @@
-import {headers, notificationMessages} from "@/utils";
+import {headers, notificationMessages, removeDetailsLocalInStorage, storeDetailsLocalInStorage} from "@/utils";
 import axios from "axios";
 
 export const state = {
@@ -98,12 +98,12 @@ export const actions = {
     },
     logUserOut({commit}) {
         commit('setLoading', true);
-        localStorage.removeItem('user');
+        removeDetailsLocalInStorage()
         commit('setUser', null);
         commit('setNotification', notificationMessages["logged-out"]);
         commit('setLoading', false);
         axios.get(`${process.env.VUE_APP_API_URL}/auth/logout`, headers()).catch(() => {});
-        localStorage.removeItem('booking_token');
+
     },
 
     //register or log in a user
@@ -112,34 +112,33 @@ export const actions = {
         const location = state.formPortalLocation === 'reg' ? `${process.env.VUE_APP_API_URL}/auth/register` : `${process.env.VUE_APP_API_URL}/auth/login`;
         axios.post(location, details)
             .then((response) => {
-                localStorage.setItem('booking_token', response.data.token);
-                localStorage.setItem('user', JSON.stringify(response.data.data));
+                storeDetailsLocalInStorage(JSON.stringify(response.data.data), response.data.token)
                 commit('setUser', response.data.data);
                 commit('setFormPortalActivated', '')
                 commit('setLoading', false);
                 commit('setNotification', notificationMessages["logged-in"]);
             })
             .catch(() => {
-                localStorage.removeItem('booking_token');
-                localStorage.removeItem('user');
+               removeDetailsLocalInStorage()
                 commit('setLoading', false);
             });
     },
 
-    //get the logged in user details
+    //get the logged-in user details
     loggedInUser({commit}) {
         commit('setLoading', true);
         axios.get(`${process.env.VUE_APP_API_URL}/auth/user`,headers()).then((response) => {
             if(!response.data.data) {
-                localStorage.removeItem('booking_token');
-                localStorage.removeItem('user');
+                removeDetailsLocalInStorage()
             }
-            commit('setUser', response.data.data ? response.data.data : null);
+            const user = response.data.data;
+            const token = response.data.token;
+            storeDetailsLocalInStorage(JSON.stringify(user), token)
+            commit('setUser', user ? user : null);
             commit('setLoading', false);
             !response.data.data ? commit('setNotification', notificationMessages["login-prompt"]) : commit('setNotification', notificationMessages["logged-in"]);
         }).catch(() => {
-            localStorage.removeItem('booking_token');
-            localStorage.removeItem('user');
+            removeDetailsLocalInStorage()
             commit('setLoading', false);
         });
     },
