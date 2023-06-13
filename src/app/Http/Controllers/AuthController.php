@@ -9,7 +9,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -24,11 +23,8 @@ class AuthController extends Controller
         $data['password'] = Hash::make($data['password']);
         $user = User::create($data);
 
-        if($user['is_admin']) {
-            $token = $user->createToken($user['email'], ['make_admin_changes'])->plainTextToken;
-        }else{
-            $token = $user->createToken($data['email'], ['make_user_changes'])->plainTextToken;
-        }
+
+        $token = $this->createToken($user, (bool)$user->is_admin);
 
         $cookie = cookie('booking_token', $token, 60*24);
 
@@ -42,7 +38,6 @@ class AuthController extends Controller
 
     public function store(UserRequest $request)
     {
-
         $data = $request->validated();
         $data['password'] = Hash::make($data['password']);
         $user = User::create($data);
@@ -53,9 +48,8 @@ class AuthController extends Controller
     }
 
 
-    public function show(string $id)
+    public function show(User $user)
     {
-        $user = User::findOrFail($id);
         return response()->json(['data' => new UserResource($user)]);
     }
 
@@ -72,12 +66,7 @@ class AuthController extends Controller
 
         $user  = User::find(Auth::user()->getAuthIdentifier());
 
-        if($user->is_admin){
-            $token = $user->createToken($data['email'],['is_admin'])->plainTextToken;
-        }else{
-            $token = $user->createToken($data['email'])->plainTextToken;
-        }
-
+        $token = $this->createToken($user, (bool)$user->is_admin);
 
         $cookie = cookie('booking_token', $token, 60*24);
 
@@ -87,11 +76,13 @@ class AuthController extends Controller
         ], 200)->withCookie($cookie);
     }
 
-    public function update(UserUpdateRequest $request, string $id)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        $user = User::findOrFail($id);
-        $user->update($request->validated());
-        return response()->json(['data' => new UserResource($user)], 204);
+        $data = $request->validated();
+        $user->update($data);
+        return response()->json([
+            'data' => new UserResource($user)
+        ], 200);
     }
 
     public function logout(Request $request)
@@ -103,12 +94,11 @@ class AuthController extends Controller
         ])->withCookie($cookie);
     }
 
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
         $user->tokens()->delete();
-        return response()->json([], 204);
+        $user->delete();
+        return response()->json([], 204)->withCookie(cookie('booking_token', null, -1));
     }
 
     public function user(Request $request)
@@ -116,4 +106,8 @@ class AuthController extends Controller
         return response()->json(['data' => $request->user() ? new UserResource($request->user()) : null]);
     }
 
+    public function createToken(User $user, bool $is_admin = false)
+    {
+        return  $is_admin ? $user->createToken($user['email'],['make_admin_changes'])->plainTextToken : $user->createToken($user['email'], ['make_user_changes'])->plainTextToken;
+    }
 }
