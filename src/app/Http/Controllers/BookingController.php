@@ -37,18 +37,17 @@ class BookingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Booking $booking)
     {
-        $booking = Booking::findOrFail($id);
         return response()->json(['data' => new BookingResource($booking)]);
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(BookingUpdateRequest $request, string $id)
+    public function update(BookingUpdateRequest $request, Booking $booking)
     {
-        $booking = Booking::findOrFail($id);
         $booking->update($request->validated());
         return response()->json(['data' => new BookingResource($booking)]);
     }
@@ -56,10 +55,9 @@ class BookingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Booking $booking)
     {
-        $booking = Booking::findOrFail($id);
         $booking->delete();
-        return response()->json([], 204);
+        return response()->json(['data' => new BookingResource($booking)]);
     }
 }
